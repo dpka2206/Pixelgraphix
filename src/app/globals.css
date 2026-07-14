@@ -34,11 +34,14 @@
   --font-display: var(--font-display);
 }
 
+html {
+  overflow-x: clip;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-body), system-ui, sans-serif;
-  overflow-x: hidden;
 }
 
 ::selection {
@@ -119,4 +122,41 @@ body::after {
 
 .animate-marquee-reverse {
   animation: marquee-reverse 40s linear infinite;
+}
+
+@keyframes cta-sheen {
+  0%,
+  28% {
+    background-position: 140% 0;
+  }
+  58%,
+  100% {
+    background-position: -40% 0;
+  }
+}
+
+.cta-sheen {
+  background-image: linear-gradient(
+    125deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.22) 48%,
+    transparent 62%
+  );
+  background-size: 220% 100%;
+  animation: cta-sheen 7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-sheen {
+    animation: none;
+  }
+}
+
+.footer-panel {
+  position: relative;
+  z-index: 10;
+}
+
+.brand-mark {
+  z-index: 0;
 }

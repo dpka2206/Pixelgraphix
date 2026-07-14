@@ -1,3 +1,5 @@
+import BrandMarkBanner from '@/components/BrandMarkBanner';
+
 const quickLinks = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '#about' },
@@ -22,42 +24,60 @@ const socialLinks = [
   { label: 'Facebook', href: '#' },
 ];
 
+/**
+ * Footer links sit above the sticky PIXELGRAPHIX mark.
+ * Scroll down → panel lifts off the wordmark (overlay opens).
+ * Scroll up → panel covers the wordmark first, then continues up.
+ */
 export default function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-background px-6 pt-16 pb-10 text-foreground md:px-10">
-      <div className="mx-auto grid max-w-6xl gap-10 sm:grid-cols-2 sm:gap-12 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
-        <div className="sm:col-span-2 md:col-span-1">
-          <a href="/" className="font-display text-2xl font-extrabold tracking-tight uppercase">
-            Pixel Graphix
-          </a>
-          <p className="mt-3 text-sm tracking-wide text-muted">
-            Creative Studio · Production · IT Solutions
-          </p>
-          <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted">
-            Where Creativity Meets Technology — cinematic production and digital
-            systems under one roof.
-          </p>
+    <footer className="relative isolate w-full text-foreground">
+      {/* Overlay panel on top of the brand mark */}
+      <div className="footer-panel relative z-10 border-t border-white/10 bg-background shadow-[0_28px_80px_rgba(0,0,0,0.65)]">
+        <div className="px-5 pt-12 pb-6 sm:px-6 sm:pt-14 sm:pb-7 md:px-10 md:pb-8">
+          <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 min-[480px]:grid-cols-2 sm:gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-12">
+            <div className="min-[480px]:col-span-2 lg:col-span-1">
+              <a
+                href="/"
+                className="font-display text-xl font-extrabold tracking-tight uppercase sm:text-2xl"
+              >
+                Pixel Graphix
+              </a>
+              <p className="mt-3 text-sm tracking-wide text-muted">
+                Creative Studio · Production · IT Solutions
+              </p>
+              <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted">
+                Where Creativity Meets Technology — cinematic production and
+                digital systems under one roof.
+              </p>
+            </div>
+
+            <FooterCol title="Quick Links" links={quickLinks} />
+            <FooterCol title="Services" links={serviceLinks} />
+            <FooterCol title="Follow Us" links={socialLinks} />
+          </div>
+
+          <div className="mx-auto mt-8 flex max-w-6xl flex-col gap-3 border-t border-white/10 pt-5 text-xs text-muted sm:mt-10 sm:flex-row sm:items-center sm:justify-between">
+            <p>
+              © {new Date().getFullYear()} Pixel Graphix. All rights reserved.
+            </p>
+            <p>
+              Powered by{' '}
+              <a
+                href="https://editcomedia.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-foreground transition-colors hover:text-accent"
+              >
+                Editco Media
+              </a>
+            </p>
+          </div>
         </div>
-
-        <FooterCol title="Quick Links" links={quickLinks} />
-        <FooterCol title="Services" links={serviceLinks} />
-        <FooterCol title="Follow Us" links={socialLinks} />
       </div>
 
-      <div className="mx-auto mt-14 flex max-w-6xl flex-col gap-3 border-t border-white/10 pt-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
-        <p>© {new Date().getFullYear()} Pixel Graphix. All rights reserved.</p>
-        <p>
-          Powered by{' '}
-          <a
-            href="https://editcomedia.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-foreground transition-colors hover:text-accent"
-          >
-            Editco Media
-          </a>
-        </p>
-      </div>
+      {/* Sticky brand mark underneath the panel */}
+      <BrandMarkBanner />
     </footer>
   );
 }
