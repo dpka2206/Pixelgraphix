@@ -65,6 +65,12 @@ body::after {
   white-space: nowrap;
 }
 
+@media (max-width: 640px) {
+  .word {
+    white-space: normal;
+  }
+}
+
 .char {
   display: inline-block;
 }

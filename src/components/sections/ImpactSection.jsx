@@ -67,7 +67,7 @@ export default function ImpactSection() {
           and every result inspires us to build even better.
         </p>
 
-        <div className="mt-14 grid grid-cols-2 gap-6 md:grid-cols-3 md:gap-10">
+        <div className="mt-14 grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 md:gap-10">
           {stats.map((stat, i) => (
             <div key={stat.label} className="border-t border-white/10 pt-6">
               <p

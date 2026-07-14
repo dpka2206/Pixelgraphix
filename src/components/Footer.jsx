@@ -25,8 +25,8 @@ const socialLinks = [
 export default function Footer() {
   return (
     <footer className="border-t border-white/10 bg-background px-6 pt-16 pb-10 text-foreground md:px-10">
-      <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
-        <div>
+      <div className="mx-auto grid max-w-6xl gap-10 sm:grid-cols-2 sm:gap-12 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="sm:col-span-2 md:col-span-1">
           <a href="/" className="font-display text-2xl font-extrabold tracking-tight uppercase">
             Pixel Graphix
           </a>

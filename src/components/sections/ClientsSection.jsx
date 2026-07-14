@@ -118,7 +118,7 @@ export default function ClientsSection() {
             </p>
             <h2
               ref={headingRef}
-              className="font-display max-w-4xl text-left text-3xl leading-[1.2] font-bold tracking-tight sm:text-5xl md:text-6xl"
+              className="font-display max-w-4xl text-left text-2xl leading-[1.25] font-bold tracking-tight sm:text-5xl md:text-6xl"
             >
               {MANIFESTO}
             </h2>
@@ -159,15 +159,14 @@ export default function ClientsSection() {
 function ClientCard({ client, offset = false }) {
   return (
     <article
-      className={`group flex h-32 shrink-0 flex-col items-center justify-center rounded-2xl border border-white/10 bg-surface px-3 text-center transition-colors duration-300 hover:border-accent/40 hover:bg-accent/5 sm:h-36 md:h-40 md:rounded-3xl ${
-        offset ? 'translate-x-6 md:translate-x-10' : ''
+      className={`group flex h-28 w-[min(200px,72vw)] shrink-0 flex-col items-center justify-center rounded-2xl border border-white/10 bg-surface px-3 text-center transition-colors duration-300 hover:border-accent/40 hover:bg-accent/5 sm:h-36 sm:w-[min(220px,45vw)] md:h-40 md:w-[calc((100vw-2.5rem)/5)] md:rounded-3xl ${
+        offset ? 'translate-x-4 sm:translate-x-6 md:translate-x-10' : ''
       }`}
-      style={{ width: 'calc((100vw - 2.5rem) / 5)' }}
     >
-      <p className="font-display text-xs font-bold tracking-wide text-foreground transition-colors group-hover:text-accent sm:text-sm md:text-base">
+      <p className="font-display text-sm font-bold tracking-wide text-foreground transition-colors group-hover:text-accent sm:text-sm md:text-base">
         {client.name}
       </p>
-      <p className="mt-1.5 text-[9px] tracking-[0.18em] text-muted uppercase sm:text-[10px]">
+      <p className="mt-1.5 text-[10px] tracking-[0.18em] text-muted uppercase sm:text-[10px]">
         {client.line}
       </p>
     </article>

@@ -98,32 +98,57 @@ export default function GraphixSection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const rows = rowsRef.current.filter(Boolean);
+      const mm = gsap.matchMedia();
 
-      rows.forEach((row) => {
-        const left = row.querySelector('[data-side="left"]');
-        const right = row.querySelector('[data-side="right"]');
-        if (!left || !right) return;
+      mm.add('(min-width: 640px)', () => {
+        const rows = rowsRef.current.filter(Boolean);
 
-        gsap.set(left, { xPercent: -40, rotate: -3 });
-        gsap.set(right, { xPercent: 40, rotate: 3 });
+        rows.forEach((row) => {
+          const left = row.querySelector('[data-side="left"]');
+          const right = row.querySelector('[data-side="right"]');
+          if (!left || !right) return;
 
-        const tl = gsap.timeline({
-          defaults: { ease: 'none' },
-          scrollTrigger: {
-            trigger: row,
-            start: 'top 90%',
-            end: 'top 35%',
-            scrub: 1.6,
-            invalidateOnRefresh: true,
-          },
+          gsap.set(left, { xPercent: -40, rotate: -3 });
+          gsap.set(right, { xPercent: 40, rotate: 3 });
+
+          const tl = gsap.timeline({
+            defaults: { ease: 'none' },
+            scrollTrigger: {
+              trigger: row,
+              start: 'top 90%',
+              end: 'top 35%',
+              scrub: 1.6,
+              invalidateOnRefresh: true,
+            },
+          });
+
+          tl.to(left, { xPercent: 0, rotate: -1.5 }, 0).to(
+            right,
+            { xPercent: 0, rotate: 1.5 },
+            0
+          );
         });
+      });
 
-        tl.to(left, { xPercent: 0, rotate: -1.5 }, 0).to(
-          right,
-          { xPercent: 0, rotate: 1.5 },
-          0
-        );
+      mm.add('(max-width: 639px)', () => {
+        const rows = rowsRef.current.filter(Boolean);
+
+        rows.forEach((row) => {
+          const cards = row.querySelectorAll('[data-side]');
+          cards.forEach((card) => {
+            gsap.from(card, {
+              y: 40,
+              opacity: 0,
+              duration: 0.7,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: card,
+                start: 'top 92%',
+                once: true,
+              },
+            });
+          });
+        });
       });
 
       ScrollTrigger.refresh();
@@ -142,7 +167,7 @@ export default function GraphixSection() {
         <p className="mb-3 text-sm tracking-[0.25em] text-accent uppercase">
           Pixel
         </p>
-        <h2 className="font-display text-left text-5xl font-extrabold tracking-tight text-foreground uppercase sm:text-7xl md:text-8xl">
+        <h2 className="font-display text-left text-4xl font-extrabold tracking-tight text-foreground uppercase sm:text-7xl md:text-8xl">
           Pixel
         </h2>
         <p className="mt-5 max-w-xl text-left text-base leading-relaxed text-muted md:text-lg">
@@ -166,7 +191,7 @@ export default function GraphixSection() {
             >
               <article
                 data-side="left"
-                className={`group relative flex min-h-[240px] w-full flex-col justify-between overflow-hidden rounded-[1.75rem] border border-white/10 bg-surface p-7 shadow-[0_20px_50px_rgba(0,0,0,0.4)] transition-colors duration-300 hover:border-white/20 will-change-transform md:min-h-[280px] md:rounded-[2rem] md:p-9 ${
+                className={`group relative flex min-h-[200px] w-full flex-col justify-between overflow-hidden rounded-[1.75rem] border border-white/10 bg-surface p-6 shadow-[0_20px_50px_rgba(0,0,0,0.4)] transition-colors duration-300 hover:border-white/20 will-change-transform sm:min-h-[240px] sm:p-7 md:min-h-[280px] md:rounded-[2rem] md:p-9 ${
                   rightLower || isLast ? 'sm:mt-0' : 'sm:mt-5 md:mt-6'
                 }`}
               >
@@ -175,7 +200,7 @@ export default function GraphixSection() {
 
               <article
                 data-side="right"
-                className={`group relative flex min-h-[240px] w-full flex-col justify-between overflow-hidden rounded-[1.75rem] border border-white/10 bg-surface p-7 shadow-[0_20px_50px_rgba(0,0,0,0.4)] transition-colors duration-300 hover:border-white/20 will-change-transform md:min-h-[280px] md:rounded-[2rem] md:p-9 ${
+                className={`group relative flex min-h-[200px] w-full flex-col justify-between overflow-hidden rounded-[1.75rem] border border-white/10 bg-surface p-6 shadow-[0_20px_50px_rgba(0,0,0,0.4)] transition-colors duration-300 hover:border-white/20 will-change-transform sm:min-h-[240px] sm:p-7 md:min-h-[280px] md:rounded-[2rem] md:p-9 ${
                   rightLower && !isLast ? 'sm:mt-5 md:mt-6' : 'sm:mt-0'
                 }`}
               >
@@ -219,7 +244,7 @@ function CardFace({ service }) {
       </div>
 
       <div className="relative mt-auto pt-10">
-        <h3 className="font-display text-3xl leading-[1.05] font-bold tracking-tight text-foreground md:text-4xl">
+        <h3 className="font-display text-2xl leading-[1.05] font-bold tracking-tight text-foreground sm:text-3xl md:text-4xl">
           {service.name}
         </h3>
         <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted md:text-base">

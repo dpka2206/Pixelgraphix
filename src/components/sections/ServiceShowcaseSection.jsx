@@ -163,8 +163,10 @@ export default function ServiceShowcaseSection() {
 function ServiceCard({ service }) {
   return (
     <SpotlightCard
-      className={`custom-spotlight-card flex w-full flex-col rounded-[2rem] border-white/10 bg-surface p-8 transition-colors duration-300 hover:border-white/20 md:rounded-[2.5rem] md:p-10 ${
-        service.tall ? 'min-h-[520px]' : 'min-h-[440px]'
+      className={`custom-spotlight-card flex w-full flex-col rounded-[1.75rem] border-white/10 bg-surface p-6 transition-colors duration-300 hover:border-white/20 sm:rounded-[2rem] sm:p-8 md:rounded-[2.5rem] md:p-10 ${
+        service.tall
+          ? 'min-h-0 md:min-h-[520px]'
+          : 'min-h-0 md:min-h-[440px]'
       }`}
       spotlightColor={service.spotlight}
     >
@@ -174,17 +176,19 @@ function ServiceCard({ service }) {
       />
       <div className="relative z-10 flex h-full flex-col">
         <div className="text-center">
-          <h3 className="font-display text-2xl font-bold tracking-tight md:text-3xl">
+          <h3 className="font-display text-xl font-bold tracking-tight sm:text-2xl md:text-3xl">
             {service.title}
           </h3>
-          <p className="mx-auto mt-4 max-w-sm text-sm leading-relaxed text-muted md:text-base">
+          <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-muted sm:mt-4 md:text-base">
             {service.blurb}
           </p>
         </div>
 
         <div
-          className={`mt-8 flex flex-1 items-center justify-center overflow-hidden rounded-2xl bg-black/20 ${
-            service.tall ? 'min-h-[240px]' : 'min-h-[180px]'
+          className={`mt-6 flex flex-1 items-center justify-center overflow-hidden rounded-2xl bg-black/20 sm:mt-8 ${
+            service.tall
+              ? 'min-h-[160px] sm:min-h-[200px] md:min-h-[240px]'
+              : 'min-h-[140px] sm:min-h-[160px] md:min-h-[180px]'
           }`}
         >
           <LottieVisual src={service.animation} />

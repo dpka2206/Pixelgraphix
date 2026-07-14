@@ -3,37 +3,33 @@
 import dynamic from 'next/dynamic';
 import Navbar from '@/components/Navbar';
 
-const LightRays = dynamic(() => import('@/components/LightRays'), {
+const DotGrid = dynamic(() => import('@/components/DotGrid'), {
   ssr: false,
 });
 
 export default function Hero() {
   return (
-    <section className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden px-6">
-      <div className="absolute inset-0 z-0">
-        <LightRays
-          raysOrigin="top-center"
-          raysColor="#e8ff47"
-          raysSpeed={1.5}
-          lightSpread={0.8}
-          rayLength={1.2}
-          followMouse={true}
-          mouseInfluence={0.1}
-          noiseAmount={0.1}
-          distortion={0.05}
-          className="custom-rays"
+    <section className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden">
+      {/* Full-bleed dots — stay visible through the bottom of the hero */}
+      <div className="absolute inset-0 z-0 h-full w-full">
+        <DotGrid
+          dotSize={5}
+          gap={22}
+          baseColor="#2a2f14"
+          activeColor="#e8ff47"
+          proximity={140}
+          speedTrigger={100}
+          shockRadius={250}
+          shockStrength={5}
+          resistance={750}
+          returnDuration={1.5}
+          className="hero-dot-grid"
         />
       </div>
 
-      {/* Soft lime falloff into next section */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-40 bg-gradient-to-t from-background via-background/80 to-transparent"
-      />
-
       <Navbar />
 
-      <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-2 pt-20 text-center">
+      <div className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center px-6 pt-20 pb-16 text-center md:pb-20">
         <p className="mb-6 text-xs font-medium tracking-[0.28em] text-accent uppercase sm:text-sm">
           Creative Studio · Production · IT Solutions
         </p>

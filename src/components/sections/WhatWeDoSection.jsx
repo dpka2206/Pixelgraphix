@@ -86,18 +86,18 @@ function DivisionCard({ eyebrow, title, href, cta, items }) {
       colors={GLOW_COLORS}
       fillOpacity={0.45}
     >
-      <div className="flex h-full flex-col p-8 md:p-10">
+      <div className="flex h-full flex-col p-6 sm:p-8 md:p-10">
         <p className="text-xs font-semibold tracking-[0.25em] text-accent uppercase">
           {eyebrow}
         </p>
-        <h3 className="font-display mt-3 text-4xl font-extrabold tracking-tight uppercase md:text-5xl">
+        <h3 className="font-display mt-3 text-3xl font-extrabold tracking-tight uppercase md:text-5xl">
           {title}
         </h3>
-        <ul className="mt-8 flex flex-wrap gap-2">
+        <ul className="mt-6 flex flex-wrap gap-2 sm:mt-8">
           {items.map((item) => (
             <li
               key={item}
-              className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-muted md:text-sm"
+              className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1.5 text-[11px] text-muted sm:px-3 sm:text-xs md:text-sm"
             >
               {item}
             </li>
@@ -105,7 +105,7 @@ function DivisionCard({ eyebrow, title, href, cta, items }) {
         </ul>
         <a
           href={href}
-          className="mt-10 inline-flex items-center gap-2 text-sm font-semibold text-foreground transition-colors hover:text-accent"
+          className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-foreground transition-colors hover:text-accent sm:mt-10"
         >
           {cta}
           <span aria-hidden>→</span>

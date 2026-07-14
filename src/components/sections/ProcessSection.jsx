@@ -46,7 +46,16 @@ export default function ProcessSection() {
   const stageRef = useRef(null);
   const stickyRef = useRef(null);
   const [active, setActive] = useState(0);
+  const [compact, setCompact] = useState(false);
   const current = steps[active] ?? steps[0];
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 1023px)');
+    const sync = () => setCompact(mq.matches);
+    sync();
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, []);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -57,7 +66,13 @@ export default function ProcessSection() {
       ScrollTrigger.create({
         trigger: stage,
         start: 'top top',
-        end: () => `+=${Math.max(steps.length * window.innerHeight * 0.7, 1)}`,
+        end: () =>
+          `+=${Math.max(
+            steps.length *
+              window.innerHeight *
+              (window.matchMedia('(max-width: 1023px)').matches ? 0.45 : 0.7),
+            1
+          )}`,
         pin: sticky,
         scrub: true,
         anticipatePin: 1,
@@ -83,7 +98,7 @@ export default function ProcessSection() {
     >
       <div
         ref={stickyRef}
-        className="flex min-h-screen flex-col justify-center px-6 py-20 md:px-10 md:py-28"
+        className="flex min-h-screen flex-col justify-center px-5 py-16 sm:px-6 sm:py-20 md:px-10 md:py-28"
       >
         <div className="mx-auto w-full max-w-6xl">
           <p className="mb-3 text-sm tracking-[0.25em] text-accent uppercase">
@@ -97,7 +112,7 @@ export default function ProcessSection() {
             the first conversation to long-term growth.
           </p>
 
-          <div className="mt-14 grid grid-cols-1 items-start gap-12 lg:grid-cols-[minmax(220px,0.9fr)_1.2fr] lg:gap-16">
+          <div className="mt-10 grid grid-cols-1 items-start gap-8 sm:mt-14 sm:gap-12 lg:grid-cols-[minmax(220px,0.9fr)_1.2fr] lg:gap-16">
             <LineSidebar
               items={labels}
               accentColor="#e8ff47"
@@ -105,15 +120,15 @@ export default function ProcessSection() {
               markerColor="#2a2a2a"
               showIndex
               showMarker
-              proximityRadius={100}
-              maxShift={28}
+              proximityRadius={compact ? 70 : 100}
+              maxShift={compact ? 12 : 28}
               falloff="smooth"
-              markerLength={56}
-              markerGap={8}
+              markerLength={compact ? 28 : 56}
+              markerGap={compact ? 6 : 8}
               tickScale={0.45}
               scaleTick
-              itemGap={28}
-              fontSize={1.15}
+              itemGap={compact ? 16 : 28}
+              fontSize={compact ? 0.95 : 1.15}
               smoothing={100}
               defaultActive={0}
               activeIndex={active}
@@ -123,15 +138,15 @@ export default function ProcessSection() {
 
             <article
               key={active}
-              className="rounded-[1.75rem] border border-white/10 bg-surface p-8 transition-opacity duration-300 md:rounded-[2rem] md:p-10"
+              className="rounded-[1.5rem] border border-white/10 bg-surface p-6 transition-opacity duration-300 sm:rounded-[1.75rem] sm:p-8 md:rounded-[2rem] md:p-10"
             >
               <p className="font-display text-sm font-semibold tracking-[0.22em] text-accent uppercase">
                 Step {String(active + 1).padStart(2, '0')}
               </p>
-              <h3 className="font-display mt-4 text-3xl font-extrabold tracking-tight md:text-5xl">
+              <h3 className="font-display mt-3 text-2xl font-extrabold tracking-tight sm:mt-4 sm:text-3xl md:text-5xl">
                 {current.title}
               </h3>
-              <p className="mt-5 max-w-lg text-base leading-relaxed text-muted md:text-lg">
+              <p className="mt-4 max-w-lg text-sm leading-relaxed text-muted sm:mt-5 sm:text-base md:text-lg">
                 {current.blurb}
               </p>
             </article>

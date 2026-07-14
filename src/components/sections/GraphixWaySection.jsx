@@ -79,6 +79,11 @@ const SCALE_MAX = 1.08;
 const Y_FAR = 48;
 const Y_FOCUS = -36;
 
+const SCALE_MIN_MOBILE = 0.88;
+const SCALE_MAX_MOBILE = 1.02;
+const Y_FAR_MOBILE = 20;
+const Y_FOCUS_MOBILE = -12;
+
 export default function GraphixWaySection() {
   const stageRef = useRef(null);
   const stickyRef = useRef(null);
@@ -94,6 +99,7 @@ export default function GraphixWaySection() {
     if (!stage || !sticky || !fillMask || !track) return;
 
     const cardEls = () => cardRefs.current.filter(Boolean);
+    const isMobile = () => window.matchMedia('(max-width: 767px)').matches;
 
     const ctx = gsap.context(() => {
       const getTravel = () =>
@@ -103,18 +109,22 @@ export default function GraphixWaySection() {
       const updateFocus = () => {
         const viewCenter = window.innerWidth / 2;
         const maxDist = window.innerWidth * 0.55;
+        const mobile = isMobile();
+        const sMin = mobile ? SCALE_MIN_MOBILE : SCALE_MIN;
+        const sMax = mobile ? SCALE_MAX_MOBILE : SCALE_MAX;
+        const yFar = mobile ? Y_FAR_MOBILE : Y_FAR;
+        const yFocus = mobile ? Y_FOCUS_MOBILE : Y_FOCUS;
 
         cardEls().forEach((card) => {
           const rect = card.getBoundingClientRect();
           const cardCenter = rect.left + rect.width / 2;
           const dist = Math.abs(viewCenter - cardCenter);
           const t = 1 - Math.min(dist / maxDist, 1);
-          // ease the focus curve so the center card pops more clearly
           const focus = t * t * (3 - 2 * t);
 
           gsap.set(card, {
-            scale: SCALE_MIN + (SCALE_MAX - SCALE_MIN) * focus,
-            y: Y_FAR + (Y_FOCUS - Y_FAR) * focus,
+            scale: sMin + (sMax - sMin) * focus,
+            y: yFar + (yFocus - yFar) * focus,
             zIndex: Math.round(10 + focus * 20),
             transformOrigin: 'center center',
             force3D: true,
@@ -122,11 +132,12 @@ export default function GraphixWaySection() {
         });
       };
 
+      const mobile = isMobile();
       gsap.set(track, { x: 0 });
       gsap.set(fillMask, { width: '0%' });
       gsap.set(cardEls(), {
-        scale: SCALE_MIN,
-        y: Y_FAR,
+        scale: mobile ? SCALE_MIN_MOBILE : SCALE_MIN,
+        y: mobile ? Y_FAR_MOBILE : Y_FAR,
         transformOrigin: 'center center',
       });
 
@@ -210,14 +221,10 @@ export default function GraphixWaySection() {
         </div>
 
         {/* Side padding lets first/last cards reach the focus center */}
-        <div className="relative z-20 w-full overflow-x-hidden py-10 md:py-14">
+        <div className="relative z-20 w-full overflow-x-hidden py-8 sm:py-10 md:py-14">
           <div
             ref={trackRef}
-            className="flex w-max items-center gap-10 will-change-transform md:gap-14 lg:gap-16"
-            style={{
-              paddingLeft: 'max(1.5rem, calc(50vw - 190px))',
-              paddingRight: 'max(1.5rem, calc(50vw - 190px))',
-            }}
+            className="flex w-max items-center gap-6 will-change-transform px-[max(1.25rem,calc(50vw-140px))] sm:gap-10 sm:px-[max(1.5rem,calc(50vw-160px))] md:gap-14 md:px-[max(1.5rem,calc(50vw-190px))] lg:gap-16"
           >
             {cards.map((card, index) => (
               <article
@@ -225,7 +232,7 @@ export default function GraphixWaySection() {
                 ref={(el) => {
                   cardRefs.current[index] = el;
                 }}
-                className="flex h-[360px] w-[320px] shrink-0 flex-col justify-between rounded-2xl border border-white/10 p-7 md:h-[400px] md:w-[380px] md:rounded-[1.25rem] md:p-8 lg:w-[400px]"
+                className="flex h-[300px] w-[min(280px,82vw)] shrink-0 flex-col justify-between rounded-2xl border border-white/10 p-6 sm:h-[360px] sm:w-[320px] sm:p-7 md:h-[400px] md:w-[380px] md:rounded-[1.25rem] md:p-8 lg:w-[400px]"
                 style={{
                   backgroundColor: '#161616',
                   boxShadow: '0 28px 70px rgba(0,0,0,0.55)',
@@ -242,10 +249,10 @@ export default function GraphixWaySection() {
                 </div>
 
                 <div className="min-w-0">
-                  <h3 className="font-display text-[1.35rem] leading-[1.15] font-extrabold tracking-[-0.03em] text-white uppercase md:text-[1.6rem]">
+                  <h3 className="font-display text-[1.2rem] leading-[1.15] font-extrabold tracking-[-0.03em] text-white uppercase sm:text-[1.35rem] md:text-[1.6rem]">
                     {card.title}
                   </h3>
-                  <p className="mt-4 text-sm leading-relaxed text-[#a0a09a] md:text-[15px]">
+                  <p className="mt-3 text-sm leading-relaxed text-[#a0a09a] sm:mt-4 md:text-[15px]">
                     {card.blurb}
                   </p>
                 </div>

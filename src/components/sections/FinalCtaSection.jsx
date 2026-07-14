@@ -4,11 +4,11 @@ export default function FinalCtaSection() {
       id="contact"
       className="relative scroll-mt-24 px-6 py-24 text-foreground md:px-10 md:py-32"
     >
-      <div className="mx-auto max-w-5xl overflow-hidden rounded-[2rem] border border-accent/25 bg-accent px-8 py-16 text-center text-background md:rounded-[2.5rem] md:px-16 md:py-20">
+      <div className="mx-auto max-w-5xl overflow-hidden rounded-[1.75rem] border border-accent/25 bg-accent px-5 py-12 text-center text-background sm:rounded-[2rem] sm:px-8 sm:py-16 md:rounded-[2.5rem] md:px-16 md:py-20">
         <p className="text-xs font-semibold tracking-[0.28em] uppercase opacity-70">
           Let&apos;s Talk
         </p>
-        <h2 className="font-display mt-4 text-3xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
+        <h2 className="font-display mt-4 text-2xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
           Let&apos;s Build Something Extraordinary
         </h2>
         <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed opacity-80 md:text-lg">
