@@ -73,44 +73,47 @@ export default function WhatWeDoSection() {
 
 function DivisionCard({ eyebrow, title, href, cta, items }) {
   return (
-    <BorderGlow
-      className="h-full"
-      edgeSensitivity={28}
-      glowColor="68 95 60"
-      backgroundColor="#161616"
-      borderRadius={28}
-      glowRadius={36}
-      glowIntensity={1.1}
-      coneSpread={25}
-      animated={false}
-      colors={GLOW_COLORS}
-      fillOpacity={0.45}
+    <a
+      href={href}
+      className="group block h-full rounded-[28px] outline-none transition-opacity focus-visible:ring-2 focus-visible:ring-accent/60"
+      aria-label={cta}
     >
-      <div className="flex h-full flex-col p-6 sm:p-8 md:p-10">
-        <p className="text-xs font-semibold tracking-[0.25em] text-accent uppercase">
-          {eyebrow}
-        </p>
-        <h3 className="font-display mt-3 text-3xl font-extrabold tracking-tight uppercase md:text-5xl">
-          {title}
-        </h3>
-        <ul className="mt-6 flex flex-wrap gap-2 sm:mt-8">
-          {items.map((item) => (
-            <li
-              key={item}
-              className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1.5 text-[11px] text-muted sm:px-3 sm:text-xs md:text-sm"
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
-        <a
-          href={href}
-          className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-foreground transition-colors hover:text-accent sm:mt-10"
-        >
-          {cta}
-          <span aria-hidden>→</span>
-        </a>
-      </div>
-    </BorderGlow>
+      <BorderGlow
+        className="h-full"
+        edgeSensitivity={28}
+        glowColor="68 95 60"
+        backgroundColor="#161616"
+        borderRadius={28}
+        glowRadius={36}
+        glowIntensity={1.1}
+        coneSpread={25}
+        animated={false}
+        colors={GLOW_COLORS}
+        fillOpacity={0.45}
+      >
+        <div className="flex h-full flex-col p-6 sm:p-8 md:p-10">
+          <p className="text-xs font-semibold tracking-[0.25em] text-accent uppercase">
+            {eyebrow}
+          </p>
+          <h3 className="font-display mt-3 text-3xl font-extrabold tracking-tight uppercase md:text-5xl">
+            {title}
+          </h3>
+          <ul className="mt-6 flex flex-wrap gap-2 sm:mt-8">
+            {items.map((item) => (
+              <li
+                key={item}
+                className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1.5 text-[11px] text-muted sm:px-3 sm:text-xs md:text-sm"
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
+          <span className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-foreground transition-colors group-hover:text-accent sm:mt-10">
+            {cta}
+            <span aria-hidden>→</span>
+          </span>
+        </div>
+      </BorderGlow>
+    </a>
   );
 }

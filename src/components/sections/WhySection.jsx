@@ -62,8 +62,11 @@ export default function WhySection() {
               colors={GLOW_COLORS}
               fillOpacity={0.4}
             >
-              <div className="relative flex h-full flex-col p-7 md:p-9">
-                <div className="absolute top-0 left-0 h-full w-1 bg-accent" />
+              <div className="relative flex h-full flex-col overflow-hidden rounded-[24px] p-7 md:p-9">
+                <div
+                  aria-hidden
+                  className="absolute inset-y-0 left-0 w-1 rounded-r-sm bg-accent"
+                />
                 <span className="font-display text-sm text-muted">{pillar.num}</span>
                 <h3 className="font-display mt-4 text-2xl font-bold tracking-tight md:text-3xl">
                   {pillar.title}
