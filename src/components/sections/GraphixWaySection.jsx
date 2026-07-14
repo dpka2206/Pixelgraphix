@@ -156,6 +156,7 @@ export default function GraphixWaySection() {
         },
       });
 
+      // Fill GRAPHIX from the X (right) as cards scrub in from the right
       tl.to(fillMask, { width: '100%', duration: 1 }, 0);
       tl.to(
         track,
@@ -204,10 +205,10 @@ export default function GraphixWaySection() {
             </span>
             <div
               ref={fillMaskRef}
-              className="absolute inset-y-0 left-0 overflow-hidden"
+              className="absolute inset-y-0 right-0 overflow-hidden"
               style={{ width: '0%' }}
             >
-              <span className="font-display block text-[clamp(6rem,22vw,15rem)] font-extrabold tracking-[-0.05em] text-accent lowercase whitespace-nowrap">
+              <span className="font-display absolute top-0 right-0 block text-[clamp(6rem,22vw,15rem)] font-extrabold tracking-[-0.05em] text-accent lowercase whitespace-nowrap">
                 graphix
               </span>
             </div>

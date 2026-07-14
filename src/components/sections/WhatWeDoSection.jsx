@@ -57,6 +57,7 @@ export default function WhatWeDoSection() {
             href="#pixel"
             cta="Explore IT Solutions"
             items={itSolutions}
+            animationDelay={0}
           />
           <DivisionCard
             eyebrow="Production"
@@ -64,6 +65,7 @@ export default function WhatWeDoSection() {
             href="#graphix"
             cta="View Production Portfolio"
             items={production}
+            animationDelay={900}
           />
         </div>
       </div>
@@ -71,7 +73,7 @@ export default function WhatWeDoSection() {
   );
 }
 
-function DivisionCard({ eyebrow, title, href, cta, items }) {
+function DivisionCard({ eyebrow, title, href, cta, items, animationDelay = 0 }) {
   return (
     <a
       href={href}
@@ -87,7 +89,8 @@ function DivisionCard({ eyebrow, title, href, cta, items }) {
         glowRadius={36}
         glowIntensity={1.1}
         coneSpread={25}
-        animated={false}
+        animated
+        animationDelay={animationDelay}
         colors={GLOW_COLORS}
         fillOpacity={0.45}
       >

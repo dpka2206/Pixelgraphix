@@ -93,6 +93,7 @@ const BorderGlow = ({
   glowIntensity = 1.0,
   coneSpread = 25,
   animated = false,
+  animationDelay = 0,
   colors = ['#c084fc', '#f472b6', '#38bdf8'],
   fillOpacity = 0.5,
 }) => {
@@ -150,40 +151,78 @@ const BorderGlow = ({
 
   useEffect(() => {
     if (!animated) return;
-    const angleStart = 110;
-    const angleEnd = 465;
-    setSweepActive(true);
-    setCursorAngle(angleStart);
 
-    animateValue({ duration: 500, onUpdate: (v) => setEdgeProximity(v / 100) });
-    animateValue({
-      ease: easeInCubic,
-      duration: 1500,
-      end: 50,
-      onUpdate: (v) => {
-        setCursorAngle((angleEnd - angleStart) * (v / 100) + angleStart);
-      },
-    });
-    animateValue({
-      ease: easeOutCubic,
-      delay: 1500,
-      duration: 2250,
-      start: 50,
-      end: 100,
-      onUpdate: (v) => {
-        setCursorAngle((angleEnd - angleStart) * (v / 100) + angleStart);
-      },
-    });
-    animateValue({
-      ease: easeInCubic,
-      delay: 2500,
-      duration: 1500,
-      start: 100,
-      end: 0,
-      onUpdate: (v) => setEdgeProximity(v / 100),
-      onEnd: () => setSweepActive(false),
-    });
-  }, [animated]);
+    let cancelled = false;
+    let timers = [];
+
+    const schedule = (fn, delay = 0) => {
+      const id = setTimeout(fn, delay);
+      timers.push(id);
+      return id;
+    };
+
+    const runSweep = () => {
+      if (cancelled) return;
+
+      const angleStart = 110;
+      const angleEnd = 465;
+      setSweepActive(true);
+      setCursorAngle(angleStart);
+
+      animateValue({
+        duration: 500,
+        onUpdate: (v) => {
+          if (!cancelled) setEdgeProximity(v / 100);
+        },
+      });
+      animateValue({
+        ease: easeInCubic,
+        duration: 1500,
+        end: 50,
+        onUpdate: (v) => {
+          if (!cancelled) {
+            setCursorAngle((angleEnd - angleStart) * (v / 100) + angleStart);
+          }
+        },
+      });
+      animateValue({
+        ease: easeOutCubic,
+        delay: 1500,
+        duration: 2250,
+        start: 50,
+        end: 100,
+        onUpdate: (v) => {
+          if (!cancelled) {
+            setCursorAngle((angleEnd - angleStart) * (v / 100) + angleStart);
+          }
+        },
+      });
+      animateValue({
+        ease: easeInCubic,
+        delay: 2500,
+        duration: 1500,
+        start: 100,
+        end: 0,
+        onUpdate: (v) => {
+          if (!cancelled) setEdgeProximity(v / 100);
+        },
+        onEnd: () => {
+          if (cancelled) return;
+          setSweepActive(false);
+          // Pause briefly, then sweep again so borders stay alive without hover
+          schedule(runSweep, 1400);
+        },
+      });
+    };
+
+    // Stagger start so sibling cards don’t lockstep
+    schedule(runSweep, 200 + animationDelay);
+
+    return () => {
+      cancelled = true;
+      timers.forEach(clearTimeout);
+    };
+  }, [animated, animationDelay]);
 
   const colorSensitivity = edgeSensitivity + 20;
   const isVisible = isHovered || sweepActive;
